@@ -1,0 +1,49 @@
+@import "../assets/handle.scss";
+
+.main {
+	.form {
+		.el-card {
+			.title {
+				font-size: 1.1rem;
+				color: #E60026;
+			}
+		}
+		.bar {
+			display: flex;
+			margin-bottom: 12px;
+		}
+	}
+	.list {
+		@include flex-center($direction: row, $content: space-between, $items: start);
+		> div {
+			width: 49%;
+		}
+
+		.serverList,
+		.emoticonList {
+			flex-shrink: 0;
+		}
+		.emoction {
+			margin: 0 12px 12px 0;
+			padding: 4px 8px;
+			border: 1px solid var(--el-border-color);
+			border-radius: 4px;
+			cursor: pointer;
+			@include flex_center($direction: row);
+			img {
+				width: 32px;
+				height: 32px;
+				margin-right: 4px;
+			}
+			input {
+				display: none;
+			}
+		}
+		.emoction:hover {
+			background-color: rgba($color: $themeColor, $alpha: 0.5);
+		}
+		.emoction:has(input:checked) {
+			background-color: rgba($color: $themeColor, $alpha: 0.8);
+		}
+	}
+}

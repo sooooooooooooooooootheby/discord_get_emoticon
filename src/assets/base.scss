@@ -1,0 +1,57 @@
+@import "./handle.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	transition: 0.2s;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+a {
+	color: $themeColor;
+}
+
+.is-focus,
+.is-focused {
+	box-shadow: 0 0 0 1px $themeColor inset !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+	background-color: $themeColor !important;
+	border-color: $themeColor !important;
+}
+.el-radio-button__inner:hover {
+	color: $themeColor !important;
+}
+
+.is-active:hover {
+	.el-radio-button__inner {
+		color: #fff !important;
+	}
+}
+
+.el-dialog {
+    padding: 30px 40px !important;
+	img {
+		margin-top: 12px;
+	}
+}
+.el-collapse-item__content {
+	max-height: 200px;
+	display: flex;
+	flex-wrap: wrap;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.el-card,.el-input {
+	margin-bottom: 12px;
+}
+
+.el-input {
+	margin-right: 12px;
+}
