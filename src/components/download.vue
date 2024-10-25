@@ -29,7 +29,7 @@
 
 		<div class="list">
 			<div class="serverList" v-if="serverLoad">
-				<el-table ref="singleTableRef" :data="serverList" highlight-current-row style="width: auto" @current-change="handleCurrentChange">
+				<el-table ref="singleTableRef" :data="serverList" highlight-current-row height="400" style="width: auto" @current-change="handleCurrentChange">
 					<el-table-column type="index" width="50" />
 					<el-table-column label="封面" width="80">
 						<template #default="scope">
@@ -118,19 +118,14 @@ let emojiListLoad = ref(false);
 const activeNames = ref(["1"]);
 const handleCurrentChange = async (e) => {
 	try {
-		const res = await API.request("GET", API.emojis(e.id), token.value);
-		emojiList.value = await res.json();
+		const [emojiRes, stickerRes] = await Promise.all([API.request("GET", API.emojis(e.id), token.value), API.request("GET", API.stickers(e.id), token.value)]);
+
+		emojiList.value = await emojiRes.json();
+		stickerList.value = await stickerRes.json();
+
 		emojiListLoad.value = true;
 	} catch (error) {
-		notification("表情列表获取失败: " + error);
-	}
-
-	try {
-		const res = await API.request("GET", API.stickers(e.id), token.value);
-		stickerList.value = await res.json();
-		emojiListLoad = true;
-	} catch (error) {
-		notification("表情列表获取失败: " + error);
+		notification("表情列表或贴纸列表获取失败: " + error);
 	}
 };
 
