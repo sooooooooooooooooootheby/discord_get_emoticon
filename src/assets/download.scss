@@ -10,7 +10,16 @@
 		}
 		.bar {
 			display: flex;
+			align-items: center;
 			margin-bottom: 12px;
+
+			.input {
+				margin: 0;
+				margin-right: 12px;
+			}
+			.checkbox {
+				margin-left: 12px;
+			}
 		}
 	}
 	.list {

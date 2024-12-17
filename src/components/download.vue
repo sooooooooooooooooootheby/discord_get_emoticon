@@ -6,9 +6,10 @@
 				<p>这个页面不会以任何有害的方式使用你的用户令牌, 只使用它来与Discord进行身份验证, 获取你的服务器列表和他们的表情符号。</p>
 			</el-card>
 			<div class="bar">
-				<el-input v-model="token" placeholder="在这里输入你的token" clearable />
+				<el-input class="input" v-model="token" placeholder="在这里输入你的token" clearable />
 				<el-button color="#5865F2" plain @click="dialogVisible = true"> token是什么 </el-button>
 				<el-button color="#5865F2" plain @click="submit"> 提交 </el-button>
+				<el-checkbox class="checkbox" v-model="isSave" label="记住你的令牌" size="large" />
 			</div>
 
 			<el-dialog v-model="dialogVisible" title="如何获取用户令牌" align-center>
@@ -74,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ElMessageBox, ElNotification } from "element-plus";
 import axios from "axios";
 import { API } from "@/assets/discordApi.js";
@@ -92,6 +93,7 @@ const notification = (message) => {
 
 const token = ref("");
 const dialogVisible = ref(false);
+const isSave = ref(false);
 
 // 提交token，判断是否为空并请求服务器列表
 const serverList = ref([]);
@@ -99,6 +101,9 @@ let serverLoad = ref(false);
 const submit = async () => {
 	if (token.value == "") {
 		return notification("token为空");
+	}
+	if (isSave.value) {
+		localStorage.setItem("token", token.value);
 	}
 
 	try {
@@ -234,6 +239,13 @@ const downloadSticker = (type) => {
 			});
 	});
 };
+
+onMounted(() => {
+	const saveToken = localStorage.getItem("token");
+	if (saveToken) {
+		token.value = saveToken;
+	}
+})
 </script>
 
 <style lang="scss" scoped>
